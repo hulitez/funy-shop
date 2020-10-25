@@ -16,20 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="product_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->findAll();
-
-        return $this->render('product/index.html.twig', [
-            'products' => $products,
-        ]);
-    }
-
-    /**
      * @Route("/new", name="product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
