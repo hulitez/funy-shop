@@ -35,6 +35,20 @@
             </tr>
         {% endfor %}
         </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3">
+                {% if previous is not null %}
+                    <a href="{{ path('index', {'page': previous}) }}">previous</a>
+                {% endif %}
+            </td>
+            <td colspan="3">
+                {% if next is not null %}
+                   <a href="{{ path('index', {'page': next}) }}">next</a>
+                {% endif %}
+            </td>
+        </tr>
+        </tfoot>
     </table>
 
     <a href="{{ path('product_new') }}">Create new</a>
