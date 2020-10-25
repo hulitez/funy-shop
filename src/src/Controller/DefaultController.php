@@ -16,7 +16,7 @@ class DefaultController extends AbstractController
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function list(Request $request, ProductRepository $productRepository)
+    public function index(Request $request, ProductRepository $productRepository)
     {
         $page = $request->query->getInt('page', 1);
         $offset = $page > 0 ? ($page -1) * ProductRepository::PAGINATOR_PER_PAGE : 0;

@@ -32,7 +32,7 @@ class ProductController extends AbstractController
 
             try {
                 $entityManager->flush();
-                return $this->redirectToRoute('product_index');
+                return $this->redirectToRoute('index');
             } catch (UniqueConstraintViolationException $e) {
                 /**
                  * @TODO - add exception handler
@@ -73,7 +73,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('product/edit.html.twig', [
@@ -96,6 +96,6 @@ class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('index');
     }
 }
