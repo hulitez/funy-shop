@@ -21,6 +21,14 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    App\Service\NotificationService:
+        autowire: false
+        arguments:
+            - [from: '%env(resolve:ADMIN_EMAIL)%', to: '%env(resolve:ADMIN_EMAIL)%']
+            - '@mailer'
+            - '@notifier'
+            - '@logger'
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
