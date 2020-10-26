@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\Product1Type;
+use App\Service\NotificationService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +19,10 @@ class ProductController extends AbstractController
     /**
      * @Route("/new", name="product_new", methods={"GET","POST"})
      * @param Request $request
+     * @param NotificationService $notification
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, NotificationService $notification): Response
     {
         $product = new Product();
         $form = $this->createForm(Product1Type::class, $product);
@@ -32,6 +34,10 @@ class ProductController extends AbstractController
 
             try {
                 $entityManager->flush();
+
+                $notification->sendMail($product);
+                $notification->sendSlackMessage($product);
+
                 return $this->redirectToRoute('index');
             } catch (UniqueConstraintViolationException $e) {
                 /**
