@@ -24,6 +24,10 @@ class ProductController extends AbstractController
      */
     public function new(Request $request, NotificationService $notification): Response
     {
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
         $product = new Product();
         $form = $this->createForm(Product1Type::class, $product);
         $form->handleRequest($request);
@@ -70,6 +74,10 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
         $form = $this->createForm(Product1Type::class, $product);
         $form->handleRequest($request);
 
@@ -93,6 +101,10 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, Product $product): Response
     {
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
