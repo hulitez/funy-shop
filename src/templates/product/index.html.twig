@@ -3,17 +3,19 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
-
+    <h1>Product list</h1>
+    {% if app.user %}
+        <a href="{{ path('product_new') }}">Create new</a>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Currency</th>
-                <th>actions</th>
+                <th style="width: 1vh">Id</th>
+                <th style="width: 1vh">Name</th>
+                <th style="width: 1vh">Description</th>
+                <th style="width: 1vh">Price</th>
+                <th style="width: 1vh">Currency</th>
+                <th style="width: 1vh">actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +28,9 @@
                 <td>{{ product.currency }}</td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                    {% if app.user %}
+                        <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -37,12 +41,12 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="3">
+            <td colspan="3" style="text-align: left">
                 {% if previous is not null %}
                     <a href="{{ path('index', {'page': previous}) }}">previous</a>
                 {% endif %}
             </td>
-            <td colspan="3">
+            <td colspan="3" style="text-align: right">
                 {% if next is not null %}
                    <a href="{{ path('index', {'page': next}) }}">next</a>
                 {% endif %}
@@ -50,6 +54,4 @@
         </tr>
         </tfoot>
     </table>
-
-    <a href="{{ path('product_new') }}">Create new</a>
 {% endblock %}
