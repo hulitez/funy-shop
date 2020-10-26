@@ -40,9 +40,6 @@ class ProductController extends AbstractController
 
                 return $this->redirectToRoute('index');
             } catch (UniqueConstraintViolationException $e) {
-                /**
-                 * @TODO - add exception handler
-                 */
                 $this->addFlash('error', 'Product with given name already exist');
             }
         }
